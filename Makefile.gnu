@@ -21,7 +21,7 @@ MODULES = $(SRCS:.c=.o)
 MODULES := $(MODULES:.cpp=.o)
 CFLAGS ?= -O3 -fPIC -fexceptions -fvisibility=hidden
 
-# Disable neon acceleration since aarch64 doesn't support it
+# Disable neon acceleration since this repository seemingly doesn't support it for aarch64
 ifeq ($(shell sh -c 'uname -m'), aarch64)
 	CFLAGS += -DPNG_ARM_NEON_OPT=0
 endif
