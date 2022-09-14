@@ -34,12 +34,25 @@ extern void BitTrace(const struct VP8BitReader* const br, const char label[]);
 #else
 #define BT_TRACK(br)
 // We'll REMOVE the 'const char label[]' from all signatures and calls (!!):
+/*
 #define VP8GetValue(BR, N, L) VP8GetValue(BR, N)
 #define VP8Get(BR, L) VP8GetValue(BR, 1, L)
 #define VP8GetSignedValue(BR, N, L) VP8GetSignedValue(BR, N)
 #define VP8GetBit(BR, P, L) VP8GetBit(BR, P)
 #define VP8GetBitAlt(BR, P, L) VP8GetBitAlt(BR, P)
 #define VP8GetSigned(BR, V, L) VP8GetSigned(BR, V)
+
+Uhh, actually not this way, mister fancy macro wizard whoever-you-are. 
+Making macros that have more arguments than the function they're referencing isn't really supported, so you need to make them variadic instead, as shown below.
+*/
+
+#define VP8GetValue(BR, N, ...) VP8GetValue(BR, N)
+#define VP8Get(BR, ...) VP8GetValue(BR, 1, L)
+#define VP8GetSignedValue(BR, N, ...) VP8GetSignedValue(BR, N)
+#define VP8GetBit(BR, P, ...) VP8GetBit(BR, P)
+#define VP8GetBitAlt(BR, P, ...) VP8GetBitAlt(BR, P)
+#define VP8GetSigned(BR, V, ...) VP8GetSigned(BR, V)
+
 #endif
 
 #ifdef __cplusplus
